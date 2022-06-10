@@ -19,6 +19,7 @@ namespace Modelos
         public bool Activo { get; set; }
         public MarcaEe Marca { get; set; }
         public UnidadMedidaEe UnidadMedida { get; set; }
+        public Status Accion{get;set;}
         public enum Status
         {
             Ninguno = 0,

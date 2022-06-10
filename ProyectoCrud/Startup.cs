@@ -38,6 +38,7 @@ namespace ProyectoCrud
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiERP", Version = "v1" });
             });
             services.AddScoped<IUsuario, UsuarioGes>();
+            services.AddScoped<IProducto, ProductoGes>();
         }
        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
