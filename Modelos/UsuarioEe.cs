@@ -14,6 +14,7 @@ namespace Modelos
 		public bool Activo { get; set; }
 		public string ClaveEncriptada { get { return new Utilitarios.Encriptacion().Encode(Clave); } }
 		public string ClaveDesencriptada { get { return new Utilitarios.Encriptacion().Decode(Clave); } }
+		public Status Accion { get; set; }
 		public enum Status
         {
 			Ninguno=0,

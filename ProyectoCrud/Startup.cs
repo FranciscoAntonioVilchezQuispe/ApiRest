@@ -1,4 +1,6 @@
 using Conexion;
+using ILogica;
+using Logica;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,46 +33,26 @@ namespace ProyectoCrud
             Base.ConnectionString = Configuration.GetConnectionString("ConnectionString");
             #endregion
             services.AddControllers();
-            AddSwagger(services);
-        }
-        private void AddSwagger(IServiceCollection services)
-        {
-            services.AddSwaggerGen(options =>
+            services.AddSwaggerGen(c =>
             {
-                var groupName = "v1";
-
-                options.SwaggerDoc(groupName, new OpenApiInfo
-                {
-                    Title = $"Api Rest {groupName}",
-                    Version = groupName,
-                    Description = "Api Rest",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Api Rest",
-                        Email = string.Empty,
-                        Url = new Uri("https://foo.com/"),
-                    }
-                });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiERP", Version = "v1" });
             });
+            services.AddScoped<IUsuario, UsuarioGes>();
         }
+       
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-              
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiERP v1"));
+
             }
 
             app.UseHttpsRedirection();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Rest");
-            });
-
-
-            app.UseRouting();
+                      app.UseRouting();
 
             app.UseAuthorization();
 
