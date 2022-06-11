@@ -19,7 +19,7 @@ namespace ProyectoCrud.Controllers
             Servicio = _Servicio;
         }
         [HttpGet("ListarUsuario")]
-        public List<UsuarioEe> GetListarUsuario(string cadena1 = "", UsuarioEe.Busqueda Busqueda1 = UsuarioEe.Busqueda.Todo)
+        public List<UsuarioEe> GetListarUsuario(string cadena1 = "", UsuarioEe.BusquedaUsuario Busqueda1 = UsuarioEe.BusquedaUsuario.Todo)
         {
             List<UsuarioEe> Lista = new List<UsuarioEe>();
             try

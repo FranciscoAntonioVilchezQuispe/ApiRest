@@ -23,7 +23,7 @@ namespace Logica
                 throw;
             }
         }
-        public List<ProductoEe> ListarProducto(string cadena = "", ProductoEe.Busqueda Busqueda = ProductoEe.Busqueda.Todo)
+        public List<ProductoEe> ListarProducto(string cadena = "", ProductoEe.BusquedaProducto Busqueda = ProductoEe.BusquedaProducto.Todo)
         {
             List<ProductoEe> arr = new List<ProductoEe>();
             try

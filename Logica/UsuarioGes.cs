@@ -20,7 +20,7 @@ namespace Logica
                 throw;
             }
         }
-        public List<UsuarioEe> ListarUsuarios(string cadena = "", UsuarioEe.Busqueda Busqueda = UsuarioEe.Busqueda.Todo)
+        public List<UsuarioEe> ListarUsuarios(string cadena = "", UsuarioEe.BusquedaUsuario Busqueda = UsuarioEe.BusquedaUsuario.Todo)
         {
             List<UsuarioEe> arr = new List<UsuarioEe>();
             try

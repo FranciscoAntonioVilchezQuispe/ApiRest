@@ -37,15 +37,8 @@ namespace Modelos
         public List<CompraDetalleEe> Detalle { get; set; }
         public ProveedorEe Proveedor { get; set; }
         public UsuarioEe Usuario { get; set; }
-        public Status Accion { get; set; }
-        public enum Status
-        {
-            Ninguno = 0,
-            Insert = 1,
-            Update = 2,
-            Delete = 3,
-        }
-        public enum Busqueda
+        public Utilitarios.UtilitariosEe.Status Accion { get; set; }
+        public enum BusquedaCompra
         {
             Todo = 0,
             PorIdCompra = 1,

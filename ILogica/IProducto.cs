@@ -10,7 +10,7 @@ namespace ILogica
    public interface IProducto
     {
         void GuardarProducto(ProductoEe obj);
-        List<ProductoEe> ListarProducto(string cadena = "", ProductoEe.Busqueda Busqueda = ProductoEe.Busqueda.Todo);
+        List<ProductoEe> ListarProducto(string cadena = "", ProductoEe.BusquedaProducto Busqueda = ProductoEe.BusquedaProducto.Todo);
 
     }
 }

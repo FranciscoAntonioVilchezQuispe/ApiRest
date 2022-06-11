@@ -18,8 +18,8 @@ namespace ProyectoCrud.Controllers
         {
             Servicio = _Servicio;
         }
-        [HttpGet("ListarUsuario")]
-        public List<ProductoEe> GetListarUsuario(string cadena = "", ProductoEe.Busqueda Busqueda = ProductoEe.Busqueda.Todo)
+        [HttpGet("ListarPRODUCTO")]
+        public List<ProductoEe> GetListarPRODUCTO(string cadena = "", ProductoEe.BusquedaProducto Busqueda = ProductoEe.BusquedaProducto.Todo)
         {
             List<ProductoEe> Lista = new List<ProductoEe>();
             try
@@ -34,8 +34,8 @@ namespace ProyectoCrud.Controllers
             }
             return Lista;
         }
-        [HttpPost("GrabarUsuario")]
-        public string PostGrabarusuario(ProductoEe obj)
+        [HttpPost("GrabarPRODUCTO")]
+        public string PostGrabarPRODUCTO(ProductoEe obj)
         {
             string respuesta = "";
             try

@@ -19,15 +19,8 @@ namespace Modelos
         public bool Activo { get; set; }
         public MarcaEe Marca { get; set; }
         public UnidadMedidaEe UnidadMedida { get; set; }
-        public Status Accion{get;set;}
-        public enum Status
-        {
-            Ninguno = 0,
-            Insert = 1,
-            Update = 2,
-            Delete = 3,
-        }
-        public enum Busqueda
+        public Utilitarios.UtilitariosEe.Status Accion { get; set; }
+        public enum BusquedaProducto
         {
             Todo = 0,
             PorId = 1,

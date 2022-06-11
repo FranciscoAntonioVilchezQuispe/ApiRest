@@ -10,6 +10,6 @@ namespace ILogica
    public interface ICompra
     {
         void GuardarCompra(CompraEe obj);
-        List<CompraEe> ListarCompra(string cadena = "", CompraEe.Busqueda Busqueda = CompraEe.Busqueda.Todo);
+        List<CompraEe> ListarCompra(string cadena = "", CompraEe.BusquedaCompra Busqueda = CompraEe.BusquedaCompra.Todo);
     }
 }

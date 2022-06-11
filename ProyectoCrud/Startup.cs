@@ -19,6 +19,7 @@ namespace ProyectoCrud
 {
     public class Startup
     {
+        private readonly string MyApi = "MyApi";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,16 +32,20 @@ namespace ProyectoCrud
         {
             #region Conexion
             Base.ConnectionString = Configuration.GetConnectionString("ConnectionString");
-            #endregion
-            services.AddControllers();
-            AddSwagger(services);
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiERP", Version = "v1" });
-            //});
             services.AddScoped<IUsuario, UsuarioGes>();
             services.AddScoped<IProducto, ProductoGes>();
             services.AddScoped<ICompra, CompraGes>();
+            #endregion
+            services.AddControllers();
+            services.AddCors(O => { O.AddPolicy(MyApi, builder => { builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); }); });
+
+
+           // AddSwagger(services);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProyectoCrud", Version = "v1" });
+            });
+
         }
         private void AddSwagger(IServiceCollection services)
         {
@@ -50,12 +55,12 @@ namespace ProyectoCrud
 
                 options.SwaggerDoc(groupName, new OpenApiInfo
                 {
-                    Title = $"ApiERP {groupName}",
+                    Title = $"ProyectoCrud {groupName}",
                     Version = groupName,
-                    Description = "ApiERP API",
+                    Description = "ProyectoCrud API",
                     Contact = new OpenApiContact
                     {
-                        Name = "ApiERP Company",
+                        Name = "ProyectoCrud Company",
                         Email = string.Empty,
                         //Url = new Uri("https://foo.com/"),
                     }
@@ -66,15 +71,16 @@ namespace ProyectoCrud
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiERP v1"));
-            if (env.IsDevelopment())
+                 if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
+   app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProyectoCrud v1"));
+    
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(MyApi);
             app.UseRouting();
 
             app.UseAuthorization();

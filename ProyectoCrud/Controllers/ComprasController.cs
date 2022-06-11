@@ -20,7 +20,7 @@ namespace ProyectoCrud.Controllers
             Servicio = _Servicio;
         }
         [HttpGet("ListarCompra")]
-        public List<CompraEe> GetListarCompra(string cadena1 = "", CompraEe.Busqueda Busqueda1 = CompraEe.Busqueda.Todo)
+        public List<CompraEe> GetListarCompra(string cadena1 = "", CompraEe.BusquedaCompra Busqueda1 = CompraEe.BusquedaCompra.Todo)
         {
             List<CompraEe> Lista = new List<CompraEe>();
             try

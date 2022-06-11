@@ -15,12 +15,12 @@ namespace Datos
         {
             try
             {
-                if (obj.Accion != ProductoEe.Status.Ninguno)
+                if (obj.Accion != Utilitarios.UtilitariosEe.Status.Ninguno)
                 {
                     string cadena = "";
                     switch (obj.Accion)
                     {
-                        case ProductoEe.Status.Insert:
+                        case Utilitarios.UtilitariosEe.Status.Insert:
                             cadena = @"INSERT INTO Producto
                                        (Codigo,Descripcion,NombreComercial,IdMarca
                                        ,PrecioVenta,PrecioCompra,Stock,IdUnidadMedida,FecCreacion,Activo)
@@ -28,7 +28,7 @@ namespace Datos
                                        (@Codigo,@Descripcion,@NombreComercial,@IdMarca
                                        ,@PrecioVenta,@PrecioCompra,@Stock,@IdUnidadMedida,getdate(),1)";
                             break;
-                        case ProductoEe.Status.Update:
+                        case Utilitarios.UtilitariosEe.Status.Update:
                             cadena = @"UPDATE Producto
                                           SET Codigo = @Codigo
                                              ,Descripcion = @Descripcion
@@ -40,7 +40,7 @@ namespace Datos
                                              ,IdUnidadMedida = @IdUnidadMedida
                                         WHERE Id=@id";
                             break;
-                        case ProductoEe.Status.Delete:
+                        case Utilitarios.UtilitariosEe.Status.Delete:
                             cadena = @"Delete from Producto where Id=@id";
                             break;
                     }
@@ -65,7 +65,7 @@ namespace Datos
                 throw;
             }
         }
-        public List<ProductoEe> ListarProducto(string cadena, ProductoEe.Busqueda busqueda = ProductoEe.Busqueda.Todo)
+        public List<ProductoEe> ListarProducto(string cadena, ProductoEe.BusquedaProducto busqueda = ProductoEe.BusquedaProducto.Todo)
         {
             List<ProductoEe> arr = new List<ProductoEe>();
             try
@@ -75,10 +75,10 @@ namespace Datos
                 {
                     switch (busqueda)
                     {
-                        case ProductoEe.Busqueda.PorId:
+                        case ProductoEe.BusquedaProducto.PorId:
                             query += $" where Id in ({cadena})";
                             break;
-                        case ProductoEe.Busqueda.PorCodigo:
+                        case ProductoEe.BusquedaProducto.PorCodigo:
                             query += $" where Codigo like'%{cadena}%'";
                             break;
 

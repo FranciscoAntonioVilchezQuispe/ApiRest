@@ -12,18 +12,18 @@ namespace Datos
         {
             try
             {
-                if (obj.Accion != UsuarioEe.Status.Ninguno)
+                if (obj.Accion != Utilitarios.UtilitariosEe.Status.Ninguno)
                 {
                     string cadena = "";
                     switch (obj.Accion)
                     {
-                        case UsuarioEe.Status.Insert:
+                        case Utilitarios.UtilitariosEe.Status.Insert:
                             cadena = @"INSERT INTO Usuarios
                                 (CodTrabajador,Nombres,Apellidos,Clave,FecIngreso,Aleas,Activo)
                                      VALUES
                                 (@CodTrabajador,@Nombres,@Apellidos,@Clave,getdate(),@Aleas,1)";
                             break;
-                        case UsuarioEe.Status.Update:
+                        case Utilitarios.UtilitariosEe.Status.Update:
                             cadena = @"UPDATE Usuarios
                                   SET CodTrabajador = @CodTrabajador
                                      ,Nombres = @Nombres
@@ -33,7 +33,7 @@ namespace Datos
                                      ,Activo = @Activo
                                 WHERE IdUsuario=@IdUsuario";
                             break;
-                        case UsuarioEe.Status.Delete:
+                        case Utilitarios.UtilitariosEe.Status.Delete:
                             cadena = @"Delete from Usuarios where IdUsuario=@idUsuario";
                             break;
                     }
@@ -56,7 +56,7 @@ namespace Datos
                 throw;
             }
         }
-        public List<UsuarioEe> ListarUsuarios(string cadena = "", UsuarioEe.Busqueda Busqueda = UsuarioEe.Busqueda.Todo)
+        public List<UsuarioEe> ListarUsuarios(string cadena = "", UsuarioEe.BusquedaUsuario Busqueda = UsuarioEe.BusquedaUsuario.Todo)
         {
             List<UsuarioEe> arr = new List<UsuarioEe>();
             try
@@ -66,13 +66,13 @@ namespace Datos
                 {
                     switch (Busqueda)
                     {
-                        case UsuarioEe.Busqueda.PorIdUsuario:
+                        case UsuarioEe.BusquedaUsuario.PorIdUsuario:
                             query += $" where Idusuario in ({cadena})";
                             break;
-                        case UsuarioEe.Busqueda.PorCodigoTrabajador:
+                        case UsuarioEe.BusquedaUsuario.PorCodigoTrabajador:
                             query += $" where CodTrabajador like'%{cadena}%'";
                             break;
-                        case UsuarioEe.Busqueda.PornombreApellido:
+                        case UsuarioEe.BusquedaUsuario.PornombreApellido:
                             query += $" where concat(Apellidos,' ',Nombres) like '%{cadena}%' or concat(Nombres,' ',Apellidos) like '%{cadena}%'";
                             break;
                     }

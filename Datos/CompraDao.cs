@@ -16,11 +16,11 @@ namespace Datos
             try
             {
                 StringBuilder cadena = new StringBuilder();
-                if (obj.Accion != CompraEe.Status.Ninguno)
+                if (obj.Accion != Utilitarios.UtilitariosEe.Status.Ninguno)
                 {
                     switch (obj.Accion)
                     {
-                        case CompraEe.Status.Insert:
+                        case Utilitarios.UtilitariosEe.Status.Insert:
                             cadena.AppendLine($@"INSERT INTO Compra
                                 (TipoComprobante,IdProveedor,Proveedordescripcion,Serie,Numero,MedioPago,CondicionPago,FecEmision,
                                     FecVencimiento,SubTotal,Igv,Total,FecCreacion,IdUsuario,Activo)
@@ -36,7 +36,7 @@ namespace Datos
 			                    (@IdCompra,{r.IdProducto},{r.IdUnidadMedida},{r.Cantidad},{r.Cantidad},{r.Total})");
                             });
                             break;
-                        case CompraEe.Status.Update:
+                        case Utilitarios.UtilitariosEe.Status.Update:
                             cadena.Append($@"UPDATE Compra
                                                SET TipoComprobante = @TipoComprobante
                                                   ,IdProveedor = @IdProveedor
@@ -63,7 +63,7 @@ namespace Datos
 			                    (@IdCompra,{r.IdProducto},{r.IdUnidadMedida},{r.Cantidad},{r.Cantidad},{r.Total})");
                             });
                             break;
-                        case CompraEe.Status.Delete:
+                        case Utilitarios.UtilitariosEe.Status.Delete:
                             cadena.AppendLine("delete from compradetalle where idcompra=@id;" +
                                                 "delete from compra where id=@id");
                             break;
@@ -99,7 +99,7 @@ namespace Datos
                 throw;
             }
         }
-        public List<CompraEe> Listarcompra(string cadena = "", CompraEe.Busqueda busqueda = CompraEe.Busqueda.Todo)
+        public List<CompraEe> Listarcompra(string cadena = "", CompraEe.BusquedaCompra busqueda = CompraEe.BusquedaCompra.Todo)
         {
             List<CompraEe> arr = new List<CompraEe>();
             try
@@ -109,24 +109,24 @@ namespace Datos
                 {
                     switch (busqueda)
                     {
-                        case CompraEe.Busqueda.PorIdCompra:
+                        case CompraEe.BusquedaCompra.PorIdCompra:
                             query += $" where Id in ({cadena})";
                             break;
-                        case CompraEe.Busqueda.PorIdProveedor:
+                        case CompraEe.BusquedaCompra.PorIdProveedor:
                             query += $" where IdProveedor in({cadena})";
                             break;
-                        case CompraEe.Busqueda.PorIdUsuario:
+                        case CompraEe.BusquedaCompra.PorIdUsuario:
                             query = $"Exec ListarComprasPorUsuario {cadena}";
                             break;
 
                     }
 
                 }
-                arr = DAPPER.Lista<CompraEe>(query, null, busqueda == CompraEe.Busqueda.PorIdUsuario ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text);
+                arr = DAPPER.Lista<CompraEe>(query, null, busqueda == CompraEe.BusquedaCompra.PorIdUsuario ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text);
                 if (arr != null && arr.Count > 0)
                 {
-                    List<CompraDetalleEe> d = ListarDetalle(string.Join(",", arr.Select(r => r.Id)), CompraDetalleEe.Busqueda.PorIdCompra);
-                    List<UsuarioEe> U = new UsuarioDao().ListarUsuarios(string.Join(",", arr.Select(r => r.IdUsuario)), UsuarioEe.Busqueda.PorIdUsuario);
+                    List<CompraDetalleEe> d = ListarDetalle(string.Join(",", arr.Select(r => r.Id)), CompraDetalleEe.BusquedaCompraDetalle.PorIdCompra);
+                    List<UsuarioEe> U = new UsuarioDao().ListarUsuarios(string.Join(",", arr.Select(r => r.IdUsuario)), UsuarioEe.BusquedaUsuario.PorIdUsuario);
                     arr.ForEach(r =>
                     {
                         r.Usuario = U.Find(x => x.IdUsuario == r.IdUsuario);
@@ -141,7 +141,7 @@ namespace Datos
             }
             return arr;
         }
-        public List<CompraDetalleEe> ListarDetalle(string cadena = "", CompraDetalleEe.Busqueda busqueda = CompraDetalleEe.Busqueda.Todo)
+        public List<CompraDetalleEe> ListarDetalle(string cadena = "", CompraDetalleEe.BusquedaCompraDetalle busqueda = CompraDetalleEe.BusquedaCompraDetalle.Todo)
         {
             List<CompraDetalleEe> arr = new List<CompraDetalleEe>();
             try
@@ -151,10 +151,10 @@ namespace Datos
                 {
                     switch (busqueda)
                     {
-                        case CompraDetalleEe.Busqueda.PorId:
+                        case CompraDetalleEe.BusquedaCompraDetalle.PorId:
                             query += $" where Id in ({cadena})";
                             break;
-                        case CompraDetalleEe.Busqueda.PorIdCompra:
+                        case CompraDetalleEe.BusquedaCompraDetalle.PorIdCompra:
                             query += $" where IdCompra in({cadena})";
                             break;
 
@@ -165,7 +165,7 @@ namespace Datos
                 arr = DAPPER.Lista<CompraDetalleEe>(query);
                 if (arr != null && arr.Count > 0)
                 {
-                    List<ProductoEe> P = new Productodao().ListarProducto(string.Join(",", arr.Select(r => r.IdProducto)), ProductoEe.Busqueda.PorId);
+                    List<ProductoEe> P = new Productodao().ListarProducto(string.Join(",", arr.Select(r => r.IdProducto)), ProductoEe.BusquedaProducto.PorId);
                     List<UnidadMedidaEe> U = new Productodao().ListarUnidadmedida();
                     arr.ForEach(r =>
                     {

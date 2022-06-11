@@ -14,15 +14,8 @@ namespace Modelos
 		public string Telefono { get; set; }
 		public string Direccion { get; set; }
 		public DateTime FecIngreso { get; set; }
-		public bool Activo { get; set; }
-        public enum Status
-        {
-            Ninguno = 0,
-            Insert = 1,
-            Update = 2,
-            Delete = 3,
-        }
-        public enum Busqueda
+		public Utilitarios.UtilitariosEe.Status Accion { get; set; }
+		public enum BusquedaProveedor
         {
             Todo = 0,
             PorId = 1,

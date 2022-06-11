@@ -15,14 +15,8 @@ namespace Modelos
         public decimal Total { get; set; }
         public ProductoEe Producto { get; set; }
         public UnidadMedidaEe UnidadMedida { get; set; }
-        public enum Status
-        {
-            Ninguno = 0,
-            Insert = 1,
-            Update = 2,
-            Delete = 3,
-        }
-        public enum Busqueda
+        public Utilitarios.UtilitariosEe.Status Accion { get; set; }
+        public enum BusquedaCompraDetalle
         {
             Todo = 0,
             PorId = 1,
