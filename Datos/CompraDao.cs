@@ -123,16 +123,7 @@ namespace Datos
 
                 }
                 arr = DAPPER.Lista<CompraEe>(query, null, busqueda == CompraEe.BusquedaCompra.PorIdUsuario ? System.Data.CommandType.StoredProcedure : System.Data.CommandType.Text);
-                if (arr != null && arr.Count > 0)
-                {
-                    List<CompraDetalleEe> d = ListarDetalle(string.Join(",", arr.Select(r => r.Id)), CompraDetalleEe.BusquedaCompraDetalle.PorIdCompra);
-                    List<UsuarioEe> U = new UsuarioDao().ListarUsuarios(string.Join(",", arr.Select(r => r.IdUsuario)), UsuarioEe.BusquedaUsuario.PorIdUsuario);
-                    arr.ForEach(r =>
-                    {
-                        r.Usuario = U.Find(x => x.IdUsuario == r.IdUsuario);
-                        r.Detalle = d.FindAll(x => x.IdCompra == r.Id);
-                    });
-                }
+                
             }
             catch (Exception)
             {

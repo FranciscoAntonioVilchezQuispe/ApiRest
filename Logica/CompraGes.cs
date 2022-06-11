@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logica
 {
-   public class CompraGes:ICompra
+    public class CompraGes : ICompra
     {
         public void GuardarCompra(CompraEe obj)
         {
@@ -29,6 +29,18 @@ namespace Logica
             try
             {
                 arr = new CompraDao().Listarcompra(cadena, Busqueda);
+                if (arr != null && arr.Count > 0)
+                {
+                    List<CompraDetalleEe> d = new CompraDao().ListarDetalle(string.Join(",", arr.Select(r => r.Id)), CompraDetalleEe.BusquedaCompraDetalle.PorIdCompra);
+                    List<UsuarioEe> U = new UsuarioDao().ListarUsuarios(string.Join(",", arr.Select(r => r.IdUsuario)), UsuarioEe.BusquedaUsuario.PorIdUsuario);
+                    List<ProveedorEe> P = new ProveedorDao().ListarProveedor(string.Join(",", arr.Select(r => r.IdProveedor)), ProveedorEe.BusquedaProveedor.PorId);
+                    arr.ForEach(r =>
+                    {
+                        r.Usuario = U.Find(x => x.IdUsuario == r.IdUsuario);
+                        r.Detalle = d.FindAll(x => x.IdCompra == r.Id);
+                        r.Proveedor = P.Find(x => x.Id == r.IdProveedor);
+                    });
+                }
             }
             catch (Exception)
             {
