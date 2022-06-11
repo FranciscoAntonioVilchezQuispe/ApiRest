@@ -37,6 +37,7 @@ namespace Modelos
         public List<CompraDetalleEe> Detalle { get; set; }
         public ProveedorEe Proveedor { get; set; }
         public UsuarioEe Usuario { get; set; }
+        public Status Accion { get; set; }
         public enum Status
         {
             Ninguno = 0,

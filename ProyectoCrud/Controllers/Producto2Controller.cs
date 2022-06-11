@@ -1,5 +1,4 @@
 ﻿using ILogica;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modelos;
 using System;
@@ -11,21 +10,20 @@ namespace ProyectoCrud.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class Producto2Controller : ControllerBase
     {
-        private IUsuario Servicio;
-        public UsuarioController(IUsuario _Servicio)
+        public IProducto Servicio;
+        public Producto2Controller(IProducto _Servicio)
         {
             Servicio = _Servicio;
         }
-        [HttpGet("ListarUsuario")]
-        public List<UsuarioEe> GetListarUsuario(string cadena1 = "", UsuarioEe.Busqueda Busqueda1 = UsuarioEe.Busqueda.Todo)
+        [HttpGet("ListarProducto")]
+        public List<ProductoEe> GetListarProducto(string cadena = "", ProductoEe.Busqueda Busqueda = ProductoEe.Busqueda.Todo)
         {
-            List<UsuarioEe> Lista = new List<UsuarioEe>();
+            List<ProductoEe> Lista = new List<ProductoEe>();
             try
             {
-                Lista = Servicio.ListarUsuarios(cadena1, Busqueda1);
-                //Respuesta = LLenarRespuesta(true, "Ok", Lista);
+                Lista = Servicio.ListarProducto(cadena, Busqueda);
 
             }
             catch (Exception ex)
@@ -34,13 +32,13 @@ namespace ProyectoCrud.Controllers
             }
             return Lista;
         }
-        [HttpPost("GrabarUsuario")]
-        public string PostGrabarusuario(UsuarioEe obj1)
+        [HttpPost("GrabarProducto")]
+        public string PostGrabarProducto(ProductoEe obj)
         {
             string respuesta = "";
             try
             {
-                Servicio.GuardarUsuario(obj1);
+                Servicio.GuardarProducto(obj);
                 respuesta = "OK";
             }
             catch (Exception ex)

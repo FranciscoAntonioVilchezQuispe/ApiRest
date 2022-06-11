@@ -1,4 +1,5 @@
 ﻿using ILogica;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modelos;
 using System;
@@ -12,18 +13,19 @@ namespace ProyectoCrud.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
-        public IProducto Servicio;
+        private IProducto Servicio;
         public ProductoController(IProducto _Servicio)
         {
             Servicio = _Servicio;
         }
-        [HttpGet("ListarProducto")]
-        public List<ProductoEe> GetListarProducto(string cadena = "", ProductoEe.Busqueda Busqueda = ProductoEe.Busqueda.Todo)
+        [HttpGet("ListarUsuario")]
+        public List<ProductoEe> GetListarUsuario(string cadena = "", ProductoEe.Busqueda Busqueda = ProductoEe.Busqueda.Todo)
         {
             List<ProductoEe> Lista = new List<ProductoEe>();
             try
             {
                 Lista = Servicio.ListarProducto(cadena, Busqueda);
+                //Respuesta = LLenarRespuesta(true, "Ok", Lista);
 
             }
             catch (Exception ex)
@@ -32,8 +34,8 @@ namespace ProyectoCrud.Controllers
             }
             return Lista;
         }
-        [HttpPost("GrabarProducto")]
-        public string PostGrabarProducto(ProductoEe obj)
+        [HttpPost("GrabarUsuario")]
+        public string PostGrabarusuario(ProductoEe obj)
         {
             string respuesta = "";
             try

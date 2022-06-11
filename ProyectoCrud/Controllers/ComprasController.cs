@@ -1,5 +1,4 @@
 ﻿using ILogica;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modelos;
 using System;
@@ -7,24 +6,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace ProyectoCrud.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class ComprasController : ControllerBase
     {
-        private IUsuario Servicio;
-        public UsuarioController(IUsuario _Servicio)
+        private ICompra Servicio;
+        public ComprasController(ICompra _Servicio)
         {
             Servicio = _Servicio;
         }
-        [HttpGet("ListarUsuario")]
-        public List<UsuarioEe> GetListarUsuario(string cadena1 = "", UsuarioEe.Busqueda Busqueda1 = UsuarioEe.Busqueda.Todo)
+        [HttpGet("ListarCompra")]
+        public List<CompraEe> GetListarCompra(string cadena1 = "", CompraEe.Busqueda Busqueda1 = CompraEe.Busqueda.Todo)
         {
-            List<UsuarioEe> Lista = new List<UsuarioEe>();
+            List<CompraEe> Lista = new List<CompraEe>();
             try
             {
-                Lista = Servicio.ListarUsuarios(cadena1, Busqueda1);
+                Lista = Servicio.ListarCompra(cadena1, Busqueda1);
                 //Respuesta = LLenarRespuesta(true, "Ok", Lista);
 
             }
@@ -34,13 +35,13 @@ namespace ProyectoCrud.Controllers
             }
             return Lista;
         }
-        [HttpPost("GrabarUsuario")]
-        public string PostGrabarusuario(UsuarioEe obj1)
+        [HttpPost("GrabarCompra")]
+        public string PostGrabarCompra(CompraEe obj1)
         {
             string respuesta = "";
             try
             {
-                Servicio.GuardarUsuario(obj1);
+                Servicio.GuardarCompra(obj1);
                 respuesta = "OK";
             }
             catch (Exception ex)
